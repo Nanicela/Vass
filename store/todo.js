@@ -51,9 +51,6 @@ export const actions = {
       data: task
     }).then((res) => {
       commit('processTask', { action: payload.action, task: Object.keys(res.data).length ? res.data : task })
-      if (payload.action === "POST") {
-        return true
-      }
     })
   }
 };
