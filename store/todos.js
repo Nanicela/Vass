@@ -1,14 +1,15 @@
-export const state = () => {
-  return {
-    allTodos: []
-  }
-}
+import axios from "axios"; // Necessary for Jest testing
+axios.defaults.baseURL = "http://localhost:3004/"
+
+export const state = () => ({
+  allTodos: []
+})
 
 export const mutations = {
   setTodos(state, payload) {
-    state.allTodos = payload.data;
+    state.allTodos = payload
   },
-  async processTask(state, payload) {
+  processTask(state, payload) {
     const task = payload.task
     switch (payload.action) {
       case "POST": {
@@ -29,28 +30,31 @@ export const mutations = {
     }
   },
   setTaskEditable(state, payload) {
-    payload.task.edit = true
     const currentTask = state.allTodos.find(item => item.id === payload.task.id)
 
     if (currentTask) {
       currentTask.edit = payload.edit
     }
   }
-};
+}
 
 export const actions = {
   async getTodos({ commit }) {
-    const data = await this.$axios.$get("todos");
-    commit('setTodos', { data })
+    return await axios.get("todos").then(res => {
+      let data = res.data
+      commit('setTodos', data)
+      return data
+    })
   },
-  handleTask({ commit }, payload) {
+  async handleTask({ commit }, payload) {
     const task = payload.task
-    this.$axios({
+    return await axios({
       method: payload.action,
       url: `todos/${task.id !== undefined ? task.id : ''}`,
       data: task
     }).then((res) => {
       commit('processTask', { action: payload.action, task: Object.keys(res.data).length ? res.data : task })
+      return res
     })
   }
-};
+}

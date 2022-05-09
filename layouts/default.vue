@@ -19,7 +19,7 @@
 
       <template #footer v-if="allTodos.length > 0" class="footer">
         <div class="d-flex justify-content-between">
-          <strong class="todo-count"> {{ allTodos.length }} {{ allTodos.length > 1 ? "items" : "item" }} left</strong>
+          <strong class="todo-count"> {{ pendingTodos }} {{ pendingTodos === 0 || pendingTodos > 1  ? "items" : "item" }} left</strong>
           <div class="main-links">
             <b-link to="/">All</b-link>
             <b-link to="active">Active</b-link>
@@ -54,13 +54,16 @@ export default {
     };
   },
   computed: {
-    ...mapState("todo", ["allTodos"]),
+    ...mapState("todos", ["allTodos"]),
+    pendingTodos(){
+      return this.allTodos.filter((todo) => !todo.completed)?.length
+    }
   },
   methods: {
-    ...mapActions("todo", ["getTodos", "handleTask"]),
+    ...mapActions("todos", ["getTodos", "handleTask"]),
     async createTask() {
       const task = JSON.parse(JSON.stringify(this.newTask))
-      const result = await this.handleTask({ task: task, action: "POST" });
+      await this.handleTask({ task: task, action: "POST" });
       this.newTask.title = null
     },
     async clearCompleted() {

@@ -1,18 +1,23 @@
 <template>
   <div class="tasks-container">
     <b-list-group class="todo-list new-todo">
-      <b-list-group-item :style="task.completed ? 'opacity: 0.4' : ''" @dblclick="setEditableMode(task)" v-for="task in filteredTodos" :key="task.id">
-        <div class="pr-3 d-inline">
-          <b-icon icon="check2" font-scale="1.2" class="cursor-pointer" :variant="task.completed ? 'success' : 'secondary'" v-b-tooltip.hover="task.completed ? 'Task already completed' : 'Mark as completed'" @click="handleTask({ task: { ...task, completed: true }, action: 'PUT' })"></b-icon>
-        </div>
+      <b-list-group-item class="d-flex w-100" :style="task.completed ? 'opacity: 0.4' : ''" @dblclick="task.completed ? null : setEditableMode(task)" v-for="task in filteredTodos" :key="task.id">
+        <b-row class="align-items-center">
+          <b-col cols="1">
+            <b-icon icon="check2" font-scale="1.2" class="cursor-pointer" :variant="task.completed ? 'success' : 'secondary'" v-b-tooltip.hover.left="task.completed ? 'Task already completed' : 'Mark as completed'" @click="handleTask({ task: { ...task, completed: true }, action: 'PUT' })"></b-icon>
+          </b-col>
 
-        <b-input class="edit" v-model="newTaskTitle" v-if="task.edit" @keyup.enter="updateTask(task, 'enter')" @keyup.esc="updateTask(task, 'esc')"></b-input>
+          <b-col>
+            <b-input class="edit d-inline" v-model="newTaskTitle" v-if="task.edit" @keyup.enter="updateTask(task, 'enter')" @keyup.esc="updateTask(task, 'esc')"></b-input>
 
-        <span v-else>
-          {{ task.title }}
-        </span>
-
-        <b-icon icon="x" font-scale="1.2" class="float-right delete-icon" @click="handleTask({ task: task, action: 'DELETE' })" v-if="!task.completed && !task.edit"></b-icon>
+            <span v-else>
+              {{ task.title }}
+            </span>
+          </b-col>
+          <b-col cols="1" class="text-right" v-if="!task.completed || !task.edit">
+            <b-icon icon="x" font-scale="1.2" class="delete-icon" @click="handleTask({ task: task, action: 'DELETE' })" v-if="!task.completed && !task.edit"></b-icon>
+          </b-col>
+        </b-row>
       </b-list-group-item>
     </b-list-group>
   </div>
@@ -29,21 +34,18 @@ export default {
     BIconX,
   },
   computed: {
-    ...mapState("todo", ["allTodos"]),
+    ...mapState("todos", ["allTodos"]),
     filteredTodos() {
-      if (this.$route.name === "index") {
-        return this.allTodos;
-      } else if (this.$route.name === "active") {
-        return this.allTodos.filter((item) => !item.completed);
-      } else if (this.$route.name === "completed") {
-        return this.allTodos.filter((item) => item.completed);
+      if (this.$route) {
+        if (this.$route.name === "index") {
+          return this.allTodos;
+        } else if (this.$route.name === "active") {
+          return this.allTodos.filter((item) => !item.completed);
+        } else if (this.$route.name === "completed") {
+          return this.allTodos.filter((item) => item.completed);
+        }
       }
     },
-  },
-  data() {
-    return {
-      lastEditedTask: {},
-    };
   },
   data() {
     return {
@@ -52,24 +54,24 @@ export default {
     };
   },
   methods: {
-    ...mapActions("todo", ["handleTask"]),
-    ...mapMutations("todo", ["setTaskEditable"]),
+    ...mapActions("todos", ["handleTask"]),
+    ...mapMutations("todos", ["setTaskEditable"]),
     setEditableMode(task) {
       if (!task.completed) {
         if (this.lastEditedTask) {
           this.setTaskEditable({
             task: this.lastEditedTask,
-            edit: false
+            edit: false,
           });
         }
 
         this.setTaskEditable({
           task: task,
-          edit: true
+          edit: true,
         });
 
         this.lastEditedTask = task;
-        this.newTaskTitle = task.title
+        this.newTaskTitle = task.title;
       }
     },
     updateTask(task, press) {
@@ -77,9 +79,9 @@ export default {
         this.handleTask({
           task: {
             ...task,
-            edit: false
+            edit: false,
           },
-          action: 'PUT'
+          action: "PUT"
         })
       } else {
         if (this.newTaskTitle) {
@@ -87,16 +89,16 @@ export default {
             task: {
               ...task,
               edit: false,
-              title: this.newTaskTitle
+              title: this.newTaskTitle,
             },
-            action: 'PUT'
+            action: "PUT"
           })
         } else {
           this.handleTask({
             task: {
-              id: task.id
+              id: task.id,
             },
-            action: 'DELETE'
+            action: "DELETE"
           })
         }
       }

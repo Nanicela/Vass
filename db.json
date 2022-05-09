@@ -1,22 +1,10 @@
 {
   "todos": [
     {
-      "title": "otra",
-      "completed": true,
-      "edit": false,
-      "id": 2
-    },
-    {
-      "title": "esta si ",
-      "completed": true,
-      "edit": false,
-      "id": 3
-    },
-    {
-      "title": "esta",
+      "title": "nueva tarea ...",
       "completed": false,
       "edit": false,
-      "id": 4
+      "id": 6
     }
   ]
 }
