@@ -6,8 +6,8 @@
           <b-col cols="1">
             <b-icon icon="check2" font-scale="1.2" class="cursor-pointer" :variant="task.completed ? 'success' : 'secondary'" v-b-tooltip.hover.left="task.completed ? 'Task already completed' : 'Mark as completed'" @click="handleTask({ task: { ...task, completed: true }, action: 'PUT' })"></b-icon>
           </b-col>
-
-          <b-col>
+        </b-row>
+        <b-col>
             <b-input class="edit d-inline" v-model="newTaskTitle" v-if="task.edit" @keyup.enter="updateTask(task, 'enter')" @keyup.esc="updateTask(task, 'esc')"></b-input>
 
             <span v-else>
@@ -17,7 +17,6 @@
           <b-col cols="1" class="text-right" v-if="!task.completed || !task.edit">
             <b-icon icon="x" font-scale="1.2" class="delete-icon" @click="handleTask({ task: task, action: 'DELETE' })" v-if="!task.completed && !task.edit"></b-icon>
           </b-col>
-        </b-row>
       </b-list-group-item>
     </b-list-group>
   </div>
