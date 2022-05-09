@@ -4,16 +4,16 @@
 # Instalar dependencias
 $ npm i
 
-# Correr en local con Hot Reload (carga instantánea de cambios).
+### Correr en local con Hot Reload (carga instantánea de cambios).
 
-# Para frontEnd.
+### Para frontEnd.
 $ npm run dev
 
-# Para backEnd.
+### Para backEnd.
 $ npm run json-server
 
-# Para backEnd de pruebas.
+### Para backEnd de pruebas.
 $ npm run json-server-test
 
-# Para Revisar las pruebas unitarias.
+### Para Revisar las pruebas unitarias.
 $ npm run test
