@@ -30,3 +30,13 @@ npm run json-server-test
 ```
 npm run test
 ```
+
+
+Es necesario correr primero el backend de pruebas para que al momento del test, este funcione de forma correcta:
+```
+npm run json-server-tests // Correr servidor de pruebas
+```
+
+```
+npm run test
+```
