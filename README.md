@@ -21,18 +21,11 @@ npm run dev
 npm run json-server
 ```
 
-### Para Backend de pruebas.
-```
-npm run json-server-test
-```
-
-### Para correr las pruebas unitarias.
-```
-npm run test
-```
+#### Para correr las pruebas unitarias.
 
 
 Es necesario correr primero el backend de pruebas para que al momento del test, este funcione de forma correcta:
+
 ```
 npm run json-server-tests // Correr servidor de pruebas
 ```
