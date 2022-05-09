@@ -1,19 +1,27 @@
 # Vass
 ### Configuración
+Vass utiliza Nuxt, Node.js, NPM, axios, Bootstrap vue, json-server.
+
 
 ## Instalar dependencias
 $ npm i
 
 ### Correr en local con Hot Reload (carga instantánea de cambios).
 
-###### Para frontEnd.
+### Para frontend.
 $ npm run dev
 
-###### Para backEnd.
-$ npm run json-server
+### Para Backend.
+```
+npm run json-server
+```
 
-###### Para backEnd de pruebas.
-$ npm run json-server-test
+### Para Backend de pruebas.
+```
+npm run json-server-test
+```
 
-###### Para Revisar las pruebas unitarias.
-$ npm run test
+### Para correr las pruebas unitarias.
+```
+npm run test
+```
