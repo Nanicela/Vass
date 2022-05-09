@@ -4,12 +4,17 @@ Vass utiliza Nuxt, Node.js, NPM, axios, Bootstrap vue, json-server.
 
 
 ## Instalar dependencias
-$ npm i
+```
+npm i
+```
 
 ### Correr en local con Hot Reload (carga instantánea de cambios).
 
 ### Para frontend.
-$ npm run dev
+```
+npm run dev
+```
+
 
 ### Para Backend.
 ```
